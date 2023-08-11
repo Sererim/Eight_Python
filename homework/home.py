@@ -1,6 +1,7 @@
 from os import walk, stat
 from json import dumps as json_dumps
 from csv import DictWriter as csv_writer
+from pickle import dump
 
 __save_file_name = ("save.json", "save.csv", "save.pickle")
 
@@ -83,8 +84,10 @@ def save_to_csv(data: dict, file_name: str = __save_file_name[1]) -> None:
             writer.writerow(csv_data)
 
 
-def save_to_pickle(data: dict) -> None:
-    pass
+def save_to_pickle(data: dict, file_name: str = __save_file_name[2]) -> None:
+    with open(file_name, '+wb') as f:
+        dump(data, f)
+        
 
 
 if __name__ == "__main__":
@@ -92,6 +95,6 @@ if __name__ == "__main__":
     # print(is_a_file("test/Fvzjyqgcwbepmkdaixhs0.png"))
     # print(convert_bytes(stat("test").st_size))
     d = walk_dir("test")
-    save_to_json(d)
-    save_to_csv(d)
-    
+    # save_to_json(d)
+    # save_to_csv(d)
+    save_to_pickle(d)
